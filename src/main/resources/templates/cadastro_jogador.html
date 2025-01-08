@@ -1,45 +1,52 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org">
-
-  <head>
+<html xmlns:th="http://www.thymeleaf.org">
+  
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cadastro de jogador</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  </head>
+</head>
 
-  <body>
+<body>
     <div class="container">
-    <h1 class="mt-5">Cadastro de jogador</h1>
-    <form th:action="@{/cadastro-jogador}" th:method="post" th:object="${jogador}">
-      <div>
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" th:field="*{nome}" required>
-      </div>
+        <h1 class="mt-5">Cadastro de jogador</h1>
+        <form th:action="@{/cadastro-jogador}" th:method="post" th:object="${jogador}">
 
-      <div>
-        <label for="email">Email:</label>
-        <input type="text" id="email" th:field="*{email}" required>
-      </div>
+            <div>
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" th:field="*{nome}" required>
+                <div th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">Nome é obrigatório</div>
+            </div>
 
-      <div>
-        <label for="telefone"> Telefone:</label>
-        <input type="text" id="telefone" th:field="*{telefone}">
-      </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="text" id="email" th:field="*{email}" required>
+                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}">E-mail inválido</div>
+            </div>
 
-      <div>
-        <label>Escolha um Grupo de Codinome</label>
-        <div th:each="grupo: ${gruposCodinomes}">
-            <input type="radio" th:field="*{grupoCodinome}" th:value="${grupo.name()}" th:id="${grupo.name()}" required>
-            <label th:for="${grupo.name()}" th:text="${grupo.getNome()}"></label>
-        </div>
-      </div>
+            <div>
+                <label for="telefone"> Telefone:</label>
+                <input type="text" id="telefone" th:field="*{telefone}">
+            </div>
 
-      <div>
-        <button type="submit" class="btn btn-primary">Cadastrar</button>
-        <a th:href="@{/listagem-jogadores}" class="btn btn-primary">Listar Jogadores</a>
-      </div>
-    </form>
-</div>
-  </body>
+            <div>
+                <label>Escolha um Grupo de Codinome</label>
+                <div th:each="grupo: ${gruposCodinomes}">
+                    <input type="radio" th:field="*{grupoCodinome}" th:value="${grupo.name()}" th:id="${grupo.name()}"
+                        required>
+                    <label th:for="${grupo.name()}" th:text="${grupo.getNome()}"></label>
+                </div>
+                <div th:if="${#fields.hasErrors('grupoCodinome')}" th:errors="*{grupoCodinome}">Seleção de grupo de
+                    codinome é obrigatória</div>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                <a th:href="@{/listagem-jogadores}" class="btn btn-primary">Listar Jogadores</a>
+            </div>
+        </form>
+    </div>
+</body>
+
 </html>
